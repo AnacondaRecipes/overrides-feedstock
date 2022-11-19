@@ -1,0 +1,43 @@
+{% set name = "overrides" %}
+{% set version = "7.3.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 8b97c6c1e1681b78cbc9424b138d880f0803c2254c5ebaabdde57bb6c62093f2
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - pip
+    - python
+    - typing
+  run:
+    - python
+    - typing
+
+test:
+  imports:
+    - overrides
+
+about:
+  home: "https://github.com/mkorpela/overrides"
+  license: Apache, Version 2.0
+  license_family: APACHE
+  license_file: 
+  summary: "A decorator to automatically detect mismatch when overriding a method."
+  doc_url: 
+  dev_url: 
+
+extra:
+  only_lint:
+    - missing-source
+  recipe-maintainers:
+    - anaobi
