@@ -1,0 +1,51 @@
+{% set name = "overrides" %}
+{% set version = "7.4.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/overrides-{{ version }}.tar.gz
+  sha256: 9502a3cca51f4fac40b5feca985b6703a5c1f6ad815588a7ca9e285b9dca6757
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<36]
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - overrides
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mkorpela/overrides
+  license: Apache-2.0
+  license_family: APACHE
+  license_file: LICENSE
+  summary: A decorator to automatically detect mismatch when overriding a method
+  description: |
+    A decorator @override that verifies that a method that should override an inherited method actually does it.
+    Copies the docstring of the inherited method to the overridden method.
+    Since signature validation and docstring inheritance are performed on class creation and not on class instantiation, 
+    this library significantly improves the safety and experience of creating class hierarchies in Python without 
+    significantly impacting performance.
+  doc_url: https://github.com/mkorpela/overrides
+  dev_url: https://github.com/mkorpela/overrides
+
+extra:
+  recipe-maintainers:
+    - cbouss
